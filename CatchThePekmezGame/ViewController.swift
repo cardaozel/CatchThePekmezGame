@@ -9,8 +9,14 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    var score = 0
+    //Variables
     
+    var score = 0
+    var timer = Timer()
+    var counter = 0
+    
+    
+    // Views
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -31,6 +37,7 @@ class ViewController: UIViewController {
         
         scoreLabel.text = "Score: \(score)"
         
+        // images
         pekmez1.isUserInteractionEnabled = true
         pekmez2.isUserInteractionEnabled = true
         pekmez3.isUserInteractionEnabled = true
@@ -62,12 +69,49 @@ class ViewController: UIViewController {
         pekmez8.addGestureRecognizer(recognizer8)
         pekmez9.addGestureRecognizer(recognizer9)
         
+        
+        //timers
+        
+        counter = 10
+        timeLabel.text = "Time: \(counter)"
+        
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
+        
     }
 
     @objc func increaseScore() {
         
         score += 1
         scoreLabel.text = "Score: \(score)"
+        
+    }
+    
+    @objc func countDown() {
+        counter -= 1
+        timeLabel.text = "Time: \(counter)"
+        
+        if counter == 0 {
+            timer.invalidate()
+            
+            //Alert
+            
+            let alert = UIAlertController(title: "Time's Up!", message: "Your score is \(score), do you want to replay?", preferredStyle: .alert)
+            
+            let okButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            let replayButton = UIAlertAction(title: "Replay", style: .default) { (action) in
+                //replay function
+                
+                
+                
+            }
+            
+            alert.addAction(okButton)
+            alert.addAction(replayButton)
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
         
     }
 
