@@ -15,6 +15,9 @@ class ViewController: UIViewController {
     var timer = Timer()
     var counter = 0
     
+    var pekmezArray = [UIImageView]()
+    
+    
     
     // Views
     
@@ -69,6 +72,7 @@ class ViewController: UIViewController {
         pekmez8.addGestureRecognizer(recognizer8)
         pekmez9.addGestureRecognizer(recognizer9)
         
+        pekmezArray = [pekmez1, pekmez2, pekmez3, pekmez4, pekmez5, pekmez6, pekmez7, pekmez8, pekmez9]
         
         //timers
         
@@ -76,6 +80,17 @@ class ViewController: UIViewController {
         timeLabel.text = "Time: \(counter)"
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
+        
+        
+        hidePekmez()
+        
+    }
+    
+    func hidePekmez() {
+        
+        for pekmez in pekmezArray {
+            pekmez.isHidden = true
+        }
         
     }
 
@@ -100,6 +115,7 @@ class ViewController: UIViewController {
             let okButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             
             let replayButton = UIAlertAction(title: "Replay", style: .default) { (action) in
+               
                 //replay function
                 
                 
