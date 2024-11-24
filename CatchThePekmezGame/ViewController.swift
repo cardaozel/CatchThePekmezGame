@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     var counter = 0
     var pekmezArray = [UIImageView]()
     var hideTimer = Timer()
+    var highScore = 0
     
     
     // Views
@@ -38,6 +39,20 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         scoreLabel.text = "Score: \(score)"
+        
+        // highscore check
+        
+        let storedHighScore = UserDefaults.standard.integer(forKey: "highScore")
+        
+        if storedHighScore == nil {
+            highScore = 0
+            highScoreLabel.text = "High Score: \(highScore)"
+        }
+        
+        if let newScore = storedHighScore as? Int {
+            highScore = newScore
+            highScoreLabel.text = "High Score: \(highScore)"
+        }
         
         // images
         pekmez1.isUserInteractionEnabled = true
@@ -115,6 +130,14 @@ class ViewController: UIViewController {
                 pekmez.isHidden = true
             }
             
+            //High Score
+            
+            if self.score > self.highScore {
+                self.highScore = self.score
+                highScoreLabel.text = "High Score: \(self.highScore)"
+                UserDefaults.standard.set(self.highScore, forKey: "highScore")
+            }
+            
             //Alert
             
             let alert = UIAlertController(title: "Time's Up!", message: "Your score is \(score), do you want to replay?", preferredStyle: .alert)
@@ -134,7 +157,7 @@ class ViewController: UIViewController {
                 
                 self.hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.increaseScore), userInfo: nil, repeats: true)
                 
-                
+        
             }
             
             alert.addAction(okButton)
