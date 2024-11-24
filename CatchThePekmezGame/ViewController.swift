@@ -125,6 +125,14 @@ class ViewController: UIViewController {
                
                 //replay function
                 
+                self.score = 0
+                self.scoreLabel.text = "Score: \(self.score)"
+                self.counter = 10
+                self.timeLabel.text = " \(self.counter)"
+                
+                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.hidePekmez), userInfo: nil, repeats: true)
+                
+                self.hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.increaseScore), userInfo: nil, repeats: true)
                 
                 
             }
