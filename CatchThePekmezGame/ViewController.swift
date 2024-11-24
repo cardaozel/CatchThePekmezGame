@@ -14,9 +14,8 @@ class ViewController: UIViewController {
     var score = 0
     var timer = Timer()
     var counter = 0
-    
     var pekmezArray = [UIImageView]()
-    
+    var hideTimer = Timer()
     
     
     // Views
@@ -81,16 +80,19 @@ class ViewController: UIViewController {
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
         
+        hideTimer = Timer.scheduledTimer(timeInterval: 0.5 , target: self, selector: #selector(hidePekmez), userInfo: nil, repeats: true)
         
         hidePekmez()
         
     }
     
-    func hidePekmez() {
+    @objc func hidePekmez() {
         
         for pekmez in pekmezArray {
             pekmez.isHidden = true
         }
+        let random = Int(arc4random_uniform(UInt32(pekmezArray.count - 1)))
+        pekmezArray[random].isHidden = false
         
     }
 
@@ -107,6 +109,11 @@ class ViewController: UIViewController {
         
         if counter == 0 {
             timer.invalidate()
+            hideTimer.invalidate()
+            
+            for pekmez in pekmezArray {
+                pekmez.isHidden = true
+            }
             
             //Alert
             
