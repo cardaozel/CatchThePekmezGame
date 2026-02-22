@@ -10,6 +10,7 @@ import UIKit
 class ViewController: UIViewController {
 
     // MARK: - Properties
+    var score = 0
     var timer = Timer()
     var counter = 0
     var pekmezArray = [UIImageView]()
@@ -80,7 +81,7 @@ class ViewController: UIViewController {
 
         // MARK: - Start game timers
         
-        counter = 10
+        counter = 30
         timeLabel.text = "Time: \(counter)"
         
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(countDown), userInfo: nil, repeats: true)
@@ -130,14 +131,12 @@ class ViewController: UIViewController {
             
             //Alert
             
-            let alert = UIAlertController(title: "Time's Up!", message: "Your score is \(score), do you want to replay?", preferredStyle: .alert)
-            
-            let okButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            let alert = UIAlertController(title: "Time's Up!", message: "Your score is \(score)", preferredStyle: .alert)
             
             let replayButton = UIAlertAction(title: "Replay", style: .default) { _ in
                 self.score = 0
                 self.scoreLabel.text = "Score: \(self.score)"
-                self.counter = 10
+                self.counter = 30
                 self.timeLabel.text = "Time: \(self.counter)"
 
                 self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.countDown), userInfo: nil, repeats: true)
@@ -145,7 +144,6 @@ class ViewController: UIViewController {
                 self.hidePekmez()
             }
             
-            alert.addAction(okButton)
             alert.addAction(replayButton)
             
             present(alert, animated: true, completion: nil)

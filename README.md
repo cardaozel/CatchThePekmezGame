@@ -5,7 +5,7 @@ A fun iOS whack-a-mole style game where you tap the pekmez (Turkish grape/molass
 ## How to Play
 
 - **Tap** the pekmez when it appears on the grid
-- You have **10 seconds** per round
+- You have **30 seconds** per round
 - Beat your **high score**!
 - Tap **Replay** to try again
 
