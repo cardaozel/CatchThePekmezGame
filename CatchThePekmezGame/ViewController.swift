@@ -9,17 +9,14 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    //Variables
-    
-    var score = 0
+    // MARK: - Properties
     var timer = Timer()
     var counter = 0
     var pekmezArray = [UIImageView]()
     var hideTimer = Timer()
     var highScore = 0
-    
-    
-    // Views
+
+    // MARK: - Outlets
     
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -44,15 +41,8 @@ class ViewController: UIViewController {
         
         let storedHighScore = UserDefaults.standard.integer(forKey: "highScore")
         
-        if storedHighScore == nil {
-            highScore = 0
-            highScoreLabel.text = "High Score: \(highScore)"
-        }
-        
-        if let newScore = storedHighScore as? Int {
-            highScore = newScore
-            highScoreLabel.text = "High Score: \(highScore)"
-        }
+        highScore = storedHighScore
+        highScoreLabel.text = "High Score: \(highScore)"
         
         // images
         pekmez1.isUserInteractionEnabled = true
@@ -87,8 +77,8 @@ class ViewController: UIViewController {
         pekmez9.addGestureRecognizer(recognizer9)
         
         pekmezArray = [pekmez1, pekmez2, pekmez3, pekmez4, pekmez5, pekmez6, pekmez7, pekmez8, pekmez9]
-        
-        //timers
+
+        // MARK: - Start game timers
         
         counter = 10
         timeLabel.text = "Time: \(counter)"
@@ -106,7 +96,7 @@ class ViewController: UIViewController {
         for pekmez in pekmezArray {
             pekmez.isHidden = true
         }
-        let random = Int(arc4random_uniform(UInt32(pekmezArray.count - 1)))
+        let random = Int(arc4random_uniform(UInt32(pekmezArray.count)))
         pekmezArray[random].isHidden = false
         
     }
@@ -144,20 +134,15 @@ class ViewController: UIViewController {
             
             let okButton = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             
-            let replayButton = UIAlertAction(title: "Replay", style: .default) { (action) in
-               
-                //replay function
-                
+            let replayButton = UIAlertAction(title: "Replay", style: .default) { _ in
                 self.score = 0
                 self.scoreLabel.text = "Score: \(self.score)"
                 self.counter = 10
-                self.timeLabel.text = " \(self.counter)"
-                
-                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.hidePekmez), userInfo: nil, repeats: true)
-                
-                self.hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.increaseScore), userInfo: nil, repeats: true)
-                
-        
+                self.timeLabel.text = "Time: \(self.counter)"
+
+                self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.countDown), userInfo: nil, repeats: true)
+                self.hideTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(self.hidePekmez), userInfo: nil, repeats: true)
+                self.hidePekmez()
             }
             
             alert.addAction(okButton)
